@@ -1,0 +1,22 @@
+<html lang-"en">
+    
+    <!-- head of file -->
+    <head>
+        <title>Usage</title>
+        <%= render 'nav' %>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    
+    <!-- body -->
+    <body>
+        
+        <h3><%= @post.title %></h3>   
+
+        <div class="container">
+            
+            <%= link_to 'Delete', @post, :method => :delete %>
+        </div>
+        
+    </body>
+    
+</html>

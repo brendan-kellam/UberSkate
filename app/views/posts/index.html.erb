@@ -1,0 +1,96 @@
+<% #Controller: /app/controllers/post_controller %>
+<% #Method: index()  %>
+<!-- adfasdf -->
+
+<!-- HTML -->
+<html lang-"en">
+    
+    <!-- head of file -->
+    <head>
+        <title>Uberskate</title>
+        <%= render 'nav' %>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <script src="//maps.google.com/maps/api/js?v=3.13&amp;sensor=false&amp;libraries=geometry" type="text/javascript"></script>
+    
+    </head>
+    
+    <!-- body -->
+    <body>
+        <div class = "container">
+            
+            <div class = "jumbotron">
+                <center><h1>Welcome to Uberskate</h1>
+                <p>challenge other skaters in your area</p>
+                <a class = "page-scroll" href="#map"><button class = "btn btn-default">Map</button></a>
+                
+                <a class = "btn btn-info" href="http://twitter.com/home/?status=@UberSkate ">Tweet it!</a></center>
+                
+                
+                <button class="btn btn-default" onclick="$('#target').toggle();">Show/Hide</button>
+                <div id="target">
+                    Hide show.....
+                </div>
+
+
+                
+            </div>
+               
+        </div>
+        
+     
+        
+        <div class="container" style="padding-bottom:200px;">
+              <div id="map" style='position:relative; padding-top:60%; height:200px;'></div>
+              
+              <br>
+              
+              <% if user_signed_in? %>
+                  <%= link_to controller: "posts", action: "new" do%>
+                      <button class="btn btn-default">New</button>
+                  <% end %>
+              <% else %>
+                  <button class="btn btn-default" onclick="alert_user()">New</button>
+                  <script>
+                      function alert_user(){
+                          alert("You need to login first");
+                      }
+                      
+                  </script>
+              <% end %>
+              
+        </div>
+     
+        
+        
+        <script>
+        
+            var handler = Gmaps.build('Google');
+            handler.buildMap({ internal: {id: 'map'}}, function(){
+                
+            var markers = handler.addMarkers(<%= raw @hash.to_json %>);
+            
+            handler.bounds.extendWith(markers);
+            handler.fitMapToBounds();
+            });
+          
+          handler.map.callback = function() {
+				google.maps.event.addListener(Gmaps.map.map, 'click', function(event) {
+				  clearOverlays();
+				  placeMarker(event.latLng);
+				});
+			};
+            
+            
+        </script>
+        
+        
+        
+        <%@posts.each do |post|%>
+            <h3><%=post.title%>  id: <%=post.id%></h3>
+            <%= link_to "Go", controller: "posts", action: "show", id: post.id %> </li>
+        <%end%>
+      
+          
+    </body>
+</html>

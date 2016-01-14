@@ -1,0 +1,103 @@
+<html>
+    <!-- navbar begin -->
+    <div class = "navbar navbar-inverse navbar-static-top">
+        <div class = "container">
+        
+            <a href = "https://www.twitter.com"> <img class = "navbar-right-icon-adj" src="/images/twitter.png"> </a>
+            <a href = "https://www.facebook.com"> <img class = "navbar-right-icon" src="/images/facebook.png"> </a>    
+            
+            <!-- Create the Uberskate icon -->
+            <%= link_to controller: "posts" do %>
+                <div class = "navbar-brand">Uberskate</div>
+            <% end %>
+            
+            <button class = "navbar-toggle" data-toggle = "collapse" data-target = ".navHeaderCollapse">
+                <span class = "icon-bar"></span>
+                <span class = "icon-bar"></span>
+                <span class = "icon-bar"></span>
+            </button>
+            
+        
+            <div class = "collapse navbar-collapse navHeaderCollapse">
+                <ul class = "nav navbar-nav navbar-right">
+                    
+                    <!-- Home navigation button-->
+                    <li id = "home"> <%= link_to "Home", controller: "posts", action: "index" %> </li>
+                    
+                    <% if current_page?(:controller => 'posts')%>
+                        <script> document.getElementById("home").className += "active"; </script>
+                    <% end %>
+                    <!-- End -->
+                    
+                    <!-- <li><a class = "page-scroll" href="#about">About</a></li> -->
+                    <!-- About navigation button -->
+                    <li id = "usage"> <%= link_to "Usage", controller: "posts", action: "usage" %> </li>
+                    
+                    <% if current_page?(:controller => "posts", :action => "usage")%>
+                        <script> document.getElementById("usage").className += "active"; </script>
+                    <% end %>
+                    <!-- END -->
+                    
+                    
+                    <!-- Showcase navigation button-->
+                    <li id = "show"> <%= link_to "Showcase", controller: "posts", action: "new" %> </li>
+                    
+                    <% if current_page?(:controller => 'posts', :action => "new")%>
+                        <script> document.getElementById("show").className += "active"; </script>
+                    <% end %>
+                    <!-- End -->
+                            
+                    <li class = "dropdown">
+                                                       
+                        <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown">Social Media <b class = "caret"></b></a>
+                                
+                        <ul class = "dropdown-menu">
+                            <li><a href = "#">Twitter</a></li>
+                            <li><a href = "#">Facebook</a></li>
+                            <li><a href = "#">Google+</a></li>
+                            <li><a href = "#">Instagram</a></li>
+                        </ul>
+                                           
+                    </li>
+                
+                    <li><a href = "#">Contact</a></li>
+                    
+                    <li>
+                        <div style = "padding-top:15px;" id = "text"> </div>
+                    </li>
+
+                    <script>
+                        removePress();
+
+                        function accountPress(){
+                            document.getElementById('text').innerHTML = 
+                            '<% if not user_signed_in? %>'
+                            +'<a href = "#" onclick="removePress()"><img src="/images/remove_icon.png"></a> <%= link_to "Sign Up", new_user_registration_path %> | <%= link_to "Login", new_user_session_path %>'
+                            + '<% else %>'
+                            + '<%= link_to "Sign out", destroy_user_session_path, method: :delete %> <%= current_user %>'
+                            + '<% end %>'
+                            ;
+                        }
+                        
+                        function removePress(){
+                            document.getElementById('text').innerHTML = 
+                            '<a href = "#" onclick="accountPress()"> <img src="/images/account_icon_small.png"> Account </a>'
+                        }
+                        
+                    </script>
+                                   
+                </ul>
+                
+
+                           
+            </div>
+        </div>
+    </div>
+    <!-- End of navbar -->
+    
+    <div class="navbar-right">
+        
+        
+    </div>
+    
+</html>
